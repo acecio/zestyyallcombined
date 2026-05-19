@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap');
+/* ✅ What it should be */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Stadium-night base */
+  --color-background: #09090b;
+  --color-foreground: #fafaf9;
+
+  --color-card: #111113;
+  --color-card-foreground: #fafaf9;
+
+  --color-popover: #0d0d0f;
+  --color-popover-foreground: #fafaf9;
+
+  /* Hot red accent (matches zestyy) */
+  --color-primary: #dc2626;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #1c1c1e;
+  --color-secondary-foreground: #fafaf9;
+
+  --color-muted: #1a1a1c;
+  --color-muted-foreground: #71717a;
+
+  --color-accent: #ef4444;
+  --color-accent-foreground: #ffffff;
+
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: #27272a;
+  --color-input: #1a1a1c;
+  --color-ring: #dc2626;
+
+  --radius: 0.75rem;
+
+  /* Live indicator */
+  --color-live: #dc2626;
+  --color-live-glow: #ef4444;
+}
+
+/* ─── Base ─────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #09090b;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background-color: #dc2626;
+    color: #ffffff;
+  }
+}
+
+/* ─── Utilities ─────────────────────────────────────────────── */
+@layer utilities {
+  /* Live pulse dot */
+  .live-dot {
+    display: inline-block;
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 9999px;
+    background: var(--color-live);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-live) 70%, transparent);
+    animation: live-pulse 1.6s ease-out infinite;
+  }
+
+  /* Gradient text — red */
+  .text-gradient-red {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Card glow on hover */
+  .card-glow {
+    box-shadow: 0 0 0 1px transparent;
+    transition: box-shadow 0.2s ease;
+  }
+  .card-glow:hover {
+    box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.3), 0 8px 32px -8px rgba(0, 0, 0, 0.8);
+  }
+
+  /* No scrollbar */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Fade-up animation */
+  .animate-fade-up {
+    animation: fade-up 0.4s ease-out both;
+  }
+
+  /* Glass surface */
+  .glass {
+    background: rgba(17, 17, 19, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Red badge glow */
+  .badge-live {
+    background: #dc2626;
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 0.2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-transform: uppercase;
+  }
+
+  /* Snap scroll row */
+  .snap-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 1.25rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .snap-row > * {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────── */
+@keyframes live-pulse {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, #dc2626 70%, transparent); }
+  70%  { box-shadow: 0 0 0 8px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
